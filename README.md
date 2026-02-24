@@ -1,68 +1,77 @@
-Automobile Sales Statistics Dashboard Capstone Project
+House Sales in King County, USA: Machine Learning Prediction Project
 Overview
-This capstone project analyzes historical automobile sales data (1980-2023) to visualize trends, recession impacts, and statistics. It uses Python for data processing and visualization, creating interactive dashboards and maps to explore sales by year, vehicle type, unemployment rates, and geography. The project highlights skills in data wrangling, EDA, and interactive visualization.
-Key focus: Identify how recessions affect sales, advertising expenditure, and vehicle types.
+This project predicts house prices in King County, USA (including Seattle) using historical sales data. It applies machine learning techniques like linear regression, polynomial features, and Ridge regression to model factors influencing prices (e.g., bedrooms, square footage, location). The goal is to build and evaluate models for accurate price estimation, demonstrating data analysis and ML skills.
 Objectives
 
-Import and clean automobile sales data using Pandas.
-Create visualizations with Matplotlib and Seaborn (e.g., line plots for sales trends, bar plots for vehicle types).
-Build an interactive Folium map for geographical sales analysis during recessions.
-Develop a Dash web app for dynamic reporting (e.g., yearly vs. recession statistics, with dropdowns and graphs).
+Import and explore the King County house sales dataset.
+Perform data wrangling (e.g., handle missing values, drop irrelevant columns).
+Conduct Exploratory Data Analysis (EDA) with visualizations (e.g., boxplots, scatter plots, heatmaps).
+Develop and fit regression models (simple linear, multiple linear, polynomial, Ridge).
+Evaluate models using metrics like R² score and refine via cross-validation/pipelines.
 
 Data Sources
 
-CSV File: historical_automobile_sales.csv (loaded via URL in notebooks).
-Key Columns: Date, Year, Month, Recession (binary flag), Automobile_Sales, Vehicle_Type, Unemployment_Rate, Advertising_Expenditure, City (for mapping).
+CSV File: kc_house_data.csv (loaded via URL in the notebook).
+Key Columns: id, date, price (target), bedrooms, bathrooms, sqft_living, sqft_lot, floors, waterfront, view, condition, grade, yr_built, yr_renovated, zipcode, lat, long.
+Dataset Size: ~21,000 entries from 2014-2015 sales.
 
 Methodology
-The project is divided into two Jupyter notebooks:
+The project is implemented in a single Jupyter notebook: House_Sales_in_King_Count_USA(2).ipynb.
 
-DV0101EN-Final-Assign-Part1.ipynb (Visualizations with Matplotlib, Seaborn, Folium):
-Loaded and explored data.
-Created line plots (e.g., yearly sales fluctuations during recessions).
-Bar plots (e.g., average sales by vehicle type).
-Pie charts (e.g., advertising expenditure share by vehicle type).
-Geographical analysis: Folium choropleth map showing sales by city during recessions (using 'us-states.json' GeoJSON).
-Saved plots as images (e.g., 'recession_sales_line.png') for peer review.
+Module 1: Importing Data:
+Loaded data using Pandas; displayed head, described stats, and checked types.
 
-DV0101EN-Final-Assign-Part2.ipynb (Interactive Dash App):
-Built a Dash web app with dropdowns for statistics type (Yearly/Recession) and year selection.
-Callbacks to dynamically update graphs based on inputs.
-Recession Report: Line chart for sales over years, bar chart for vehicle types, pie chart for ad expenditure, bar chart for unemployment effects.
-Yearly Report: Line charts for total/ monthly sales, bar chart for average vehicles sold, pie chart for ad expenditure by vehicle.
-Layout: Flexbox styling for grid-based chart display.
-Run: python app.py (opens at http://127.0.0.1:8050/).
+Module 2: Data Wrangling:
+Dropped irrelevant columns (id, Unnamed: 0).
+Handled missing values in 'bedrooms' and 'bathrooms' (replaced with means).
+Converted 'floors' to integer.
+
+Module 3: Exploratory Data Analysis:
+Boxplots for price by waterfront/view.
+Regression plots for sqft_living vs. price.
+Correlation heatmaps to identify features (e.g., high correlation with sqft_living, bathrooms).
+
+Module 4: Model Development:
+Simple Linear Regression: sqft_living vs. price (R² ~0.49).
+Multiple Linear Regression: Using features like floors, waterfront, lat, etc. (R² ~0.65).
+Polynomial Regression: Transformed features (degree 2); improved R² (~0.75).
+Visualized predictions with distribution plots.
+
+Module 5: Model Evaluation and Refinement:
+Used pipelines for scaling/polynomial transforms.
+Ridge Regression with alpha optimization (R² ~0.66).
+Cross-validation for robust scoring; tested on holdout set.
 
 
 Results
 
-Insights:
-Sales drop significantly during recessions (e.g., 2008-2009 financial crisis).
-Economy vehicles sell better during high unemployment; luxury vehicles correlate with higher ad spend.
-Geographical patterns: Higher sales in urban areas like New York during non-recession periods.
+Key Insights: Price strongly correlates with living space, location (lat/long), and views. Waterfront homes are pricier.
+Model Performance:
+Linear: R² = 0.49-0.65.
+Polynomial (degree 2): R² = 0.75 (best performer).
+Ridge: R² = 0.66 (with regularization to prevent overfitting).
 
-Visuals: Interactive elements allow filtering; e.g., pie charts show ~40% ad spend on SUVs.
-Challenges: Handled dynamic disabling of year dropdown for recession mode; ensured no data scenarios return empty graphs.
+Visuals: Regression lines, residual plots, and distribution comparisons show model fit.
 
 Technologies Used
 
-Python Libraries: Pandas, NumPy, Matplotlib, Seaborn, Folium, Dash, Plotly Express, More-Itertools.
-Tools: Jupyter Notebooks, GitHub for version control.
+Python Libraries: Pandas, NumPy, Matplotlib, Seaborn, Scikit-learn (LinearRegression, PolynomialFeatures, Ridge, Pipeline, cross_val_score).
+Tools: Jupyter Notebooks.
 
 How to Run the Project
 
 Clone the repository: git clone <your-github-repo-url>.
-Install dependencies: pip install -r requirements.txt (include: pandas, dash, plotly, folium, matplotlib, seaborn, more-itertools).
-Run notebooks: Open in Jupyter (jupyter notebook) and execute cells.
-For Dash App: Run python DV0101EN-Final-Assign-Part2.ipynb (or export to .py) and access the dashboard in your browser.
+Install dependencies: pip install -r requirements.txt (include: pandas, numpy, matplotlib, seaborn, scikit-learn).
+Run the notebook: Open in Jupyter (jupyter notebook) and execute cells sequentially.
+Data Download: The notebook fetches data via URL; ensure internet access.
 
 Limitations and Future Work
 
-Data is historical (up to 2023); integrate real-time APIs for updates.
-Expand to predictive ML (e.g., forecast sales using Scikit-learn).
-Deploy Dash app to Heroku for public access.
+Data is from 2014-2015; update with recent sales for better relevance.
+Incorporate advanced models (e.g., Random Forest, XGBoost) or external data (e.g., economic indicators).
+Deploy as a web app (e.g., using Streamlit) for interactive price predictions.
 
 References
 
-IBM Data Visualization with Python Course (Coursera).
-Data Source: IBM Skills Network.
+IBM Data Analysis with Python Course (Coursera).
+Dataset: King County House Sales (public domain).
